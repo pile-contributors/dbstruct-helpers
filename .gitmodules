@@ -1,0 +1,3 @@
+[submodule "dbstruct"]
+	path = dbstruct
+	url = git@github.com:pile-contributors/dbstruct.git
