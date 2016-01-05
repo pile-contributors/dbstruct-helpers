@@ -5,15 +5,15 @@ class TestUsage : public ::testing::Test {
 
 public:
 
-    TestUsage () {}
+    TestUsage () : inst_(NULL) {}
 
     virtual ~TestUsage () {}
 
     void SetUp(){
-        inst_ = new DbStruct();
+        //inst_ = new DbStruct();
     }
     void TearDown(){
-        delete inst_;
+        //delete inst_;
     }
     DbStruct * inst_;
 };

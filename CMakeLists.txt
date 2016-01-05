@@ -24,6 +24,11 @@ project(${PROJECT_NAME})
 cmake_minimum_required(VERSION 2.8.11)
 enable_testing()
 
+list (APPEND CMAKE_MODULE_PATH "$ENV{CMAKE_MODULE_PATH}")
+IF(WIN32)
+    string(REPLACE "\\" "/" CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}")
+ENDIF()
+
 option( INCLUDE_PILE_SOURCES_DIRECTLY
         "Use internal dbstruct as a pile (ON) or as a library (OFF)"
         OFF)
