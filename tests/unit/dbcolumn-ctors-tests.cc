@@ -1,14 +1,14 @@
 #include <gtest/gtest.h>
 #include <dbstruct/dbstruct.h>
 #include <dbstruct/dbcolumn.h>
-
-class TestUsage : public ::testing::Test {
+/*
+class TestColumnCtors : public ::testing::Test {
 
 public:
 
-    TestUsage () : inst_(NULL) {}
+    TestColumnCtors () : inst_(NULL) {}
 
-    virtual ~TestUsage () {}
+    virtual ~TestColumnCtors () {}
 
     void SetUp(){
         //inst_ = new DbStruct();
@@ -18,8 +18,8 @@ public:
     }
     DbStruct * inst_;
 };
-
-TEST_F(TestUsage, default_constructor) {
+*/
+TEST(TestColumnCtors, default_constructor) {
     DbColumn testee;
     EXPECT_FALSE(testee.isVirtual ());
     EXPECT_TRUE(testee.columnName ().isEmpty());
@@ -32,7 +32,7 @@ TEST_F(TestUsage, default_constructor) {
     EXPECT_FALSE(testee.readOnly());
 }
 
-TEST_F(TestUsage, simple_constructor_only_required) {
+TEST(TestColumnCtors, simple_constructor_only_required) {
     QString col_name ("col1");
     int col_id = 0;
     DbColumn testee (col_name, DbDataType::DTY_TEXT, col_id);
@@ -50,7 +50,7 @@ TEST_F(TestUsage, simple_constructor_only_required) {
     EXPECT_FALSE(testee.readOnly());
 }
 
-TEST_F(TestUsage, simple_constructor_label) {
+TEST(TestColumnCtors, simple_constructor_label) {
     QString col_name ("col1");
     QString col_label ("First Column");
     int col_id = 0;
@@ -69,7 +69,7 @@ TEST_F(TestUsage, simple_constructor_label) {
     EXPECT_FALSE(testee.readOnly());
 }
 
-TEST_F(TestUsage, simple_constructor_real_col_id) {
+TEST(TestColumnCtors, simple_constructor_real_col_id) {
     QString col_name ("col1");
     QString col_label ("First Column");
     int col_id = 44;
@@ -90,7 +90,7 @@ TEST_F(TestUsage, simple_constructor_real_col_id) {
     EXPECT_FALSE(testee.readOnly());
 }
 
-TEST_F(TestUsage, simple_constructor_length) {
+TEST(TestColumnCtors, simple_constructor_length) {
     QString col_name ("col1");
     QString col_label ("First Column");
     int col_id = 44;
@@ -111,7 +111,7 @@ TEST_F(TestUsage, simple_constructor_length) {
     EXPECT_FALSE(testee.readOnly());
 }
 
-TEST_F(TestUsage, simple_constructor_allow_nulls) {
+TEST(TestColumnCtors, simple_constructor_allow_nulls) {
     QString col_name ("col1");
     QString col_label ("First Column");
     int col_id = 44;
@@ -140,7 +140,7 @@ TEST_F(TestUsage, simple_constructor_allow_nulls) {
 }
 
 
-TEST_F(TestUsage, simple_constructor_readonly) {
+TEST(TestColumnCtors, simple_constructor_readonly) {
     QString col_name ("col1");
     QString col_label ("First Column");
     int col_id = 44;

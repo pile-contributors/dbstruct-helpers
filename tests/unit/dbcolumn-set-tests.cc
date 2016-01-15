@@ -2,13 +2,13 @@
 #include <dbstruct/dbstruct.h>
 #include <dbstruct/dbcolumn.h>
 
-class TestUsage : public ::testing::Test {
+class TestColumnSetters : public ::testing::Test {
 
 public:
 
-    TestUsage () : inst_(NULL) {}
+    TestColumnSetters () : inst_() {}
 
-    virtual ~TestUsage () {}
+    virtual ~TestColumnSetters () {}
 
     void SetUp(){
         //inst_ = new DbStruct();
@@ -16,155 +16,108 @@ public:
     void TearDown(){
         //delete inst_;
     }
-    DbStruct * inst_;
+    DbColumn inst_;
 };
 
-TEST_F(TestUsage, default_constructor) {
-    DbColumn testee;
-    EXPECT_FALSE(testee.isVirtual ());
-    EXPECT_TRUE(testee.columnName ().isEmpty());
-    EXPECT_TRUE(testee.columnLabel ().isEmpty());
-    EXPECT_EQ(testee.columnId (), -1);
-    EXPECT_EQ(testee.columnRealId (), -1);
-    EXPECT_EQ(testee.columnLength (), -1);
-    EXPECT_EQ(testee.columnType (), DbDataType::DTY_INVALID);
-    EXPECT_TRUE(testee.allowNulls());
-    EXPECT_FALSE(testee.readOnly());
+TEST_F(TestColumnSetters, initial_state) {
+    EXPECT_FALSE(inst_.isVirtual ());
+    EXPECT_TRUE(inst_.columnName ().isEmpty());
+    EXPECT_TRUE(inst_.columnLabel ().isEmpty());
+    EXPECT_EQ(inst_.columnId (), dbstruct::UNDEFINED);
+    EXPECT_EQ(inst_.columnRealId (), dbstruct::UNDEFINED);
+    EXPECT_EQ(inst_.columnLength (), dbstruct::UNDEFINED);
+    EXPECT_EQ(inst_.columnType (), DbDataType::DTY_INVALID);
+    EXPECT_TRUE(inst_.allowNulls());
+    EXPECT_FALSE(inst_.readOnly());
 }
 
-TEST_F(TestUsage, simple_constructor_only_required) {
-    QString col_name ("col1");
-    int col_id = 0;
-    DbColumn testee (col_name, DbDataType::DTY_TEXT, col_id);
-
-    EXPECT_FALSE(testee.isVirtual ());
-    EXPECT_FALSE(testee.columnName ().isEmpty());
-    EXPECT_FALSE(testee.columnLabel ().isEmpty());
-    EXPECT_EQ(testee.columnName (), col_name);
-    EXPECT_EQ(testee.columnLabel (), col_name);
-    EXPECT_EQ(testee.columnId (), col_id);
-    EXPECT_EQ(testee.columnRealId (), col_id);
-    EXPECT_EQ(testee.columnLength (), dbstruct::UNDEFINED);
-    EXPECT_EQ(testee.columnType (), DbDataType::DTY_TEXT);
-    EXPECT_TRUE(testee.allowNulls());
-    EXPECT_FALSE(testee.readOnly());
+TEST_F(TestColumnSetters, name) {
+    QString s_name ("name");
+    inst_.setColumnName (s_name);
+    EXPECT_FALSE(inst_.columnName ().isEmpty());
+    EXPECT_FALSE(inst_.columnLabel ().isEmpty());
+    EXPECT_EQ(inst_.columnName (), s_name);
+    EXPECT_EQ(inst_.columnLabel (), s_name);
 }
 
-TEST_F(TestUsage, simple_constructor_label) {
-    QString col_name ("col1");
-    QString col_label ("First Column");
-    int col_id = 0;
-    DbColumn testee (col_name, DbDataType::DTY_TEXT, col_id, col_label);
+TEST_F(TestColumnSetters, label) {
+    QString s_label ("label");
+    inst_.setColumnLabel (s_label);
+    EXPECT_TRUE(inst_.columnName ().isEmpty());
+    EXPECT_FALSE(inst_.columnLabel ().isEmpty());
+    EXPECT_EQ(inst_.columnLabel (), s_label);
 
-    EXPECT_FALSE(testee.isVirtual ());
-    EXPECT_FALSE(testee.columnName ().isEmpty());
-    EXPECT_FALSE(testee.columnLabel ().isEmpty());
-    EXPECT_EQ(testee.columnName (), col_name);
-    EXPECT_EQ(testee.columnLabel (), col_label);
-    EXPECT_EQ(testee.columnId (), col_id);
-    EXPECT_EQ(testee.columnRealId (), col_id);
-    EXPECT_EQ(testee.columnLength (), dbstruct::UNDEFINED);
-    EXPECT_EQ(testee.columnType (), DbDataType::DTY_TEXT);
-    EXPECT_TRUE(testee.allowNulls());
-    EXPECT_FALSE(testee.readOnly());
+    QString s_name ("name");
+    inst_.setColumnName (s_name);
+    EXPECT_FALSE(inst_.columnName ().isEmpty());
+    EXPECT_FALSE(inst_.columnLabel ().isEmpty());
+    EXPECT_EQ(inst_.columnName (), s_name);
+    EXPECT_EQ(inst_.columnLabel (), s_label);
+
+    inst_.setColumnLabel (QString());
+    EXPECT_TRUE(inst_.columnLabel ().isEmpty());
+    EXPECT_FALSE(inst_.columnName ().isEmpty());
+
+    inst_.setColumnName (s_name);
+    EXPECT_FALSE(inst_.columnName ().isEmpty());
+    EXPECT_FALSE(inst_.columnLabel ().isEmpty());
+    EXPECT_EQ(inst_.columnName (), s_name);
+    EXPECT_EQ(inst_.columnLabel (), s_name);
 }
 
-TEST_F(TestUsage, simple_constructor_real_col_id) {
-    QString col_name ("col1");
-    QString col_label ("First Column");
-    int col_id = 44;
-    int real_id = 43;
-    DbColumn testee (col_name, DbDataType::DTY_TEXT,
-                     col_id, col_label, real_id);
+TEST_F(TestColumnSetters, id) {
+    int new_id = 15;
+    inst_.setColumnId (new_id);
+    EXPECT_EQ(inst_.columnId (), new_id);
+    EXPECT_EQ(inst_.columnRealId (), dbstruct::UNDEFINED);
 
-    EXPECT_FALSE(testee.isVirtual ());
-    EXPECT_FALSE(testee.columnName ().isEmpty());
-    EXPECT_FALSE(testee.columnLabel ().isEmpty());
-    EXPECT_EQ(testee.columnName (), col_name);
-    EXPECT_EQ(testee.columnLabel (), col_label);
-    EXPECT_EQ(testee.columnId (), col_id);
-    EXPECT_EQ(testee.columnRealId (), real_id);
-    EXPECT_EQ(testee.columnLength (), dbstruct::UNDEFINED);
-    EXPECT_EQ(testee.columnType (), DbDataType::DTY_TEXT);
-    EXPECT_TRUE(testee.allowNulls());
-    EXPECT_FALSE(testee.readOnly());
+    ++new_id;
+    inst_.setColumnId (new_id);
+    EXPECT_EQ(inst_.columnId (), new_id);
+    EXPECT_EQ(inst_.columnRealId (), dbstruct::UNDEFINED);
+
+    new_id = dbstruct::UNDEFINED;
+    inst_.setColumnId (new_id);
+    EXPECT_EQ(inst_.columnId (), new_id);
+    EXPECT_EQ(inst_.columnRealId (), dbstruct::UNDEFINED);
 }
 
-TEST_F(TestUsage, simple_constructor_length) {
-    QString col_name ("col1");
-    QString col_label ("First Column");
-    int col_id = 44;
-    int length = 43;
-    DbColumn testee (col_name, DbDataType::DTY_TEXT,
-                     col_id, col_label, dbstruct::DEFAULT, length);
+TEST_F(TestColumnSetters, real_id) {
+    int new_id = 15;
+    inst_.setColumnRealId (new_id);
+    EXPECT_EQ(inst_.columnRealId (), new_id);
+    EXPECT_EQ(inst_.columnId (), dbstruct::UNDEFINED);
 
-    EXPECT_FALSE(testee.isVirtual ());
-    EXPECT_FALSE(testee.columnName ().isEmpty());
-    EXPECT_FALSE(testee.columnLabel ().isEmpty());
-    EXPECT_EQ(testee.columnName (), col_name);
-    EXPECT_EQ(testee.columnLabel (), col_label);
-    EXPECT_EQ(testee.columnId (), col_id);
-    EXPECT_EQ(testee.columnRealId (), col_id);
-    EXPECT_EQ(testee.columnLength (), length);
-    EXPECT_EQ(testee.columnType (), DbDataType::DTY_TEXT);
-    EXPECT_TRUE(testee.allowNulls());
-    EXPECT_FALSE(testee.readOnly());
+    ++new_id;
+    inst_.setColumnRealId (new_id);
+    EXPECT_EQ(inst_.columnRealId (), new_id);
+    EXPECT_EQ(inst_.columnId (), dbstruct::UNDEFINED);
+
+    new_id = dbstruct::UNDEFINED;
+    inst_.setColumnRealId (new_id);
+    EXPECT_EQ(inst_.columnRealId (), new_id);
+    EXPECT_EQ(inst_.columnId (), dbstruct::UNDEFINED);
 }
 
-TEST_F(TestUsage, simple_constructor_allow_nulls) {
-    QString col_name ("col1");
-    QString col_label ("First Column");
-    int col_id = 44;
-    DbColumn testee (col_name, DbDataType::DTY_TEXT,
-                     col_id, col_label,
-                     dbstruct::DEFAULT, dbstruct::UNDEFINED,
-                     false);
+TEST_F(TestColumnSetters, nulls) {
+    inst_.setAllowNulls (true);
+    EXPECT_TRUE(inst_.allowNulls());
 
-    EXPECT_FALSE(testee.isVirtual ());
-    EXPECT_FALSE(testee.columnName ().isEmpty());
-    EXPECT_FALSE(testee.columnLabel ().isEmpty());
-    EXPECT_EQ(testee.columnName (), col_name);
-    EXPECT_EQ(testee.columnLabel (), col_label);
-    EXPECT_EQ(testee.columnId (), col_id);
-    EXPECT_EQ(testee.columnRealId (), col_id);
-    EXPECT_EQ(testee.columnLength (), dbstruct::UNDEFINED);
-    EXPECT_EQ(testee.columnType (), DbDataType::DTY_TEXT);
-    EXPECT_FALSE(testee.allowNulls());
-    EXPECT_FALSE(testee.readOnly());
+    inst_.setAllowNulls (false);
+    EXPECT_FALSE(inst_.allowNulls());
 
-    DbColumn testee2 (col_name, DbDataType::DTY_TEXT,
-                      col_id, col_label,
-                      dbstruct::DEFAULT, dbstruct::UNDEFINED,
-                      true);
-    EXPECT_TRUE(testee2.allowNulls());
+    inst_.setAllowNulls (true);
+    EXPECT_TRUE(inst_.allowNulls());
 }
 
+TEST_F(TestColumnSetters, read_only) {
+    inst_.setReadOnly (true);
+    EXPECT_TRUE(inst_.readOnly ());
 
-TEST_F(TestUsage, simple_constructor_readonly) {
-    QString col_name ("col1");
-    QString col_label ("First Column");
-    int col_id = 44;
-    DbColumn testee (col_name, DbDataType::DTY_TEXT,
-                     col_id, col_label,
-                     dbstruct::DEFAULT, dbstruct::UNDEFINED,
-                     false, true);
+    inst_.setReadOnly (false);
+    EXPECT_FALSE(inst_.readOnly ());
 
-    EXPECT_FALSE(testee.isVirtual ());
-    EXPECT_FALSE(testee.columnName ().isEmpty());
-    EXPECT_FALSE(testee.columnLabel ().isEmpty());
-    EXPECT_EQ(testee.columnName (), col_name);
-    EXPECT_EQ(testee.columnLabel (), col_label);
-    EXPECT_EQ(testee.columnId (), col_id);
-    EXPECT_EQ(testee.columnRealId (), col_id);
-    EXPECT_EQ(testee.columnLength (), dbstruct::UNDEFINED);
-    EXPECT_EQ(testee.columnType (), DbDataType::DTY_TEXT);
-    EXPECT_FALSE(testee.allowNulls());
-    EXPECT_TRUE(testee.readOnly());
-
-    DbColumn testee2 (col_name, DbDataType::DTY_TEXT,
-                      col_id, col_label,
-                      dbstruct::DEFAULT, dbstruct::UNDEFINED,
-                      false, false);
-    EXPECT_FALSE(testee2.readOnly());
+    inst_.setReadOnly (true);
+    EXPECT_TRUE(inst_.readOnly ());
 }
 
