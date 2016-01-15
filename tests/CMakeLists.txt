@@ -24,6 +24,7 @@ add_executable(test_basic
     ${DBSTRUCT_SOURCES}
     ${DBSTRUCT_HEADERS}
     basic.cc)
+qt5_use_modules(test_basic Sql)
 
 if (UNIX)
     find_package(Threads REQUIRED)
@@ -38,3 +39,6 @@ target_link_libraries(test_basic
 add_test(
     NAME test_basic
     COMMAND $<TARGET_FILE:test_basic>)
+
+add_subdirectory("unit")
+add_subdirectory("integration")

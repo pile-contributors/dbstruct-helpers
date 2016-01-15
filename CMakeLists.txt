@@ -2,14 +2,14 @@
 #
 # Introduction
 # ------------
-# 
-# This file is the main file for the dbstruct-helpers. The project follows 
+#
+# This file is the main file for the dbstruct-helpers. The project follows
 # the pattern laid out at http://pile-contributors.github.io/
 # for a `pile-helpers` repository.
 #
 # Usage
 # -----
-# 
+#
 # You can use the resources in this project to understand this pile,
 # to use it as a model for your own piles or to improve and test this pile.
 #
@@ -46,7 +46,7 @@ include_directories(
     "${CMAKE_CURRENT_BINARY_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}")
 
-find_package(Qt5 COMPONENTS Core)
+find_package(Qt5 COMPONENTS Core Sql)
 if(Qt5Core_FOUND)
     include_directories(
          ${Qt5Core_INCLUDE_DIRS})
