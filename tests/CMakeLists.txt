@@ -20,25 +20,13 @@ if (NOT INCLUDE_PILE_SOURCES_DIRECTLY)
     set (DBSTRUCT_LIBRARY dbstruct)
 endif()
 
-add_executable(test_basic
-    ${DBSTRUCT_SOURCES}
-    ${DBSTRUCT_HEADERS}
-    basic.cc)
-qt5_use_modules(test_basic Sql)
-
 if (UNIX)
     find_package(Threads REQUIRED)
     list(APPEND GTEST_BOTH_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
     add_definitions(-fPIC)
 endif()
 
-target_link_libraries(test_basic
-    ${GTEST_BOTH_LIBRARIES}
-    ${DBSTRUCT_LIBRARY})
-
-add_test(
-    NAME test_basic
-    COMMAND $<TARGET_FILE:test_basic>)
-
+enable_testing()
 add_subdirectory("unit")
 add_subdirectory("integration")
+

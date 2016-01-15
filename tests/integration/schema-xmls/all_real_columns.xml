@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database xmlns="http://pile-contributors.github.io/database/PileSchema.xsd"
+          name="all_real_columns">
+    <tables>
+        <table name="table1">
+            <columns>
+                <column name="id">
+                    <int>
+                        <identity />
+                    </int>
+                </column>
+
+                <column name="bit"><bit /></column>
+                <column name="tristate"><tristate /></column>
+                <column name="int"><int /></column>
+                <column name="bigint"><bigint /></column>
+                <column name="smallint"><smallint /></column>
+                <column name="tinyint"><tinyint /></column>
+
+                <column name="numeric"><numeric /></column>
+                <column name="decimal"><decimal /></column>
+                <column name="numericScale0"><numericScale0 /></column>
+                <column name="decimalScale0"><decimalScale0 /></column>
+
+                <column name="money"><money /></column>
+
+                <column name="float"><float /></column>
+                <column name="real"><real /></column>
+
+                <column name="date"><date /></column>
+                <column name="datetime"><datetime /></column>
+                <column name="time"><time /></column>
+
+                <column name="char"><char /></column>
+                <column name="varchar"><varchar /></column>
+                <column name="text"><text /></column>
+
+                <column name="nchar"><nchar /></column>
+                <column name="nvarchar"><nvarchar /></column>
+                <column name="ntext"><ntext /></column>
+
+                <column name="binary"><binary /></column>
+                <column name="varbinary"><varbinary /></column>
+                <column name="image"><image /></column>
+
+                <column name="xml"><xml /></column>
+            </columns>
+        </table>
+    </tables>
+    <views>
+    </views>
+</database>

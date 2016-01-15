@@ -21,5 +21,10 @@ if (modules_testing_src)
     set_target_properties ( internal-test
         PROPERTIES COMPILE_DEFINITIONS "${props}"
     )
+
+    add_test(NAME "internal-test"
+             WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/build/bin"
+             COMMAND "internal-test")
+
 endif (modules_testing_src)
 

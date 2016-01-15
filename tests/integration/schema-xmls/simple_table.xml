@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database xmlns="http://pile-contributors.github.io/database/PileSchema.xsd"
+          name="simple_table">
+    <tables>
+        <table name="table1">
+            <columns>
+                <column name="id">
+                    <int>
+                        <identity />
+                    </int>
+                </column>
+            </columns>
+            <uniqueConstraints>
+            </uniqueConstraints>
+            <indexes>
+            </indexes>
+            <relationships>
+            </relationships>
+        </table>
+    </tables>
+    <views>
+    </views>
+</database>

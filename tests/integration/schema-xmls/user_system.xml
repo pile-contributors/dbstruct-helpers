@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database xmlns="http://pile-contributors.github.io/database/PileSchema.xsd"
+          name="simple_table">
+    <tables>
+        <table name="AccessToken">
+            <columns>
+                <column name="id" label="ID" readOnly="true" allowNulls="false">
+                    <varchar length="255" />
+                </column>
+                <column name="ttl" label="Time to Live" allowNulls="true">
+                    <int defaultExpression="NULL"/>
+                </column>
+                <column name="created" readOnly="true" label="Created" allowNulls="true">
+                    <datetime defaultExpression="NULL"/>
+                </column>
+                <column name="userId" label="User ID" allowNulls="true">
+                    <int defaultExpression="NULL"/>
+                </column>
+            </columns>
+            <primaryKey>
+                <key>
+                    <column name="id" />
+                </key>
+            </primaryKey>
+        </table>
+
+        <table name="ACL">
+            <columns>
+                <column name="id"
+                        label="ID"
+                        readOnly="true">
+                    <int>
+                        <identity />
+                    </int>
+                </column>
+                <column name="model" label="Model" allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="property" label="Property" allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="accessType" label="Access Type" allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="permission" label="Permission" allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="principalType" label="Principal Type" allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="principalId" label="Principal ID" allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+            </columns>
+            <primaryKey>
+                <key>
+                    <column name="id" />
+                </key>
+            </primaryKey>
+        </table>
+
+        <table name="Person">
+            <columns>
+                <column name="id"
+                        label="ID"
+                        readOnly="true">
+                    <int>
+                        <identity />
+                    </int>
+                </column>
+                <column name="realm"
+                        label="Realm"
+                        allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="username"
+                        label="Username"
+                        allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="password"
+                        label="Password"
+                        allowNulls="true"
+                        readOnly="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="firstname"
+                        label="First Name"
+                        allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="familyname"
+                        label="Family Name"
+                        allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="phone"
+                        label="Phone"
+                        allowNulls="true">
+                    <varchar length="50" defaultExpression="NULL" />
+                </column>
+                <column name="credentials"
+                        label="Credentials"
+                        allowNulls="true"
+                        readOnly="true">
+                    <text />
+                </column>
+                <column name="challenges"
+                        label="Challanges"
+                        allowNulls="true"
+                        readOnly="true">
+                    <text />
+                </column>
+                <column name="email"
+                        label="E-Mail"
+                        allowNulls="false">
+                    <varchar length="512" />
+                </column>
+                <column name="emailVerified"
+                        label="E-Mail Verified"
+                        allowNulls="true"
+                        userformat="Yes"
+                        readOnly="true">
+                    <bit default="false" />
+                </column>
+                <column name="verificationToken"
+                        label="Token"
+                        allowNulls="true"
+                        readOnly="true">
+                    <varchar length="512" />
+                </column>
+                <column name="status"
+                        label="Status"
+                        allowNulls="true"
+                        readOnly="true">
+                    <varchar length="512" />
+                </column>
+                <column name="created"
+                        readOnly="true"
+                        label="Created"
+                        allowNulls="true">
+                    <datetime defaultExpression="NULL" />
+                </column>
+                <column name="modified"
+                        readOnly="true"
+                        label="Updated"
+                        allowNulls="true">
+                    <datetime defaultExpression="NULL" />
+                </column>
+            </columns>
+            <primaryKey>
+                <key>
+                    <column name="id" />
+                </key>
+            </primaryKey>
+        </table>
+
+        <table name="Role">
+            <columns>
+                <column name="id"
+                        label="ID"
+                        readOnly="true">
+                    <int>
+                        <identity />
+                    </int>
+                </column>
+                <column name="name"
+                        label="Name"
+                        allowNulls="false">
+                    <varchar length="512" />
+                </column>
+                <column name="description"
+                        label="Description"
+                        allowNulls="false">
+                    <varchar length="512" />
+                </column>
+                <column name="created"
+                        readOnly="true"
+                        label="Created"
+                        allowNulls="true">
+                    <datetime defaultExpression="NULL" />
+                </column>
+                <column name="modified"
+                        readOnly="true"
+                        label="Modified"
+                        allowNulls="true">
+                    <datetime defaultExpression="NULL" />
+                </column>
+            </columns>
+            <primaryKey>
+                <key>
+                    <column name="id" />
+                </key>
+            </primaryKey>
+        </table>
+
+        <table name="RoleMapping">
+            <columns>
+                <column name="id"
+                        label="ID"
+                        readOnly="true">
+                    <int>
+                        <identity />
+                    </int>
+                </column>
+                <column name="principalType"
+                        label="Principal Type"
+                        allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL"/>
+                </column>
+                <column name="principalId"
+                        label="Principal ID"
+                        allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="roleId"
+                        label="Role ID"
+                        allowNulls="true">
+                    <int defaultExpression="NULL" />
+                </column>
+            </columns>
+            <primaryKey>
+                <key>
+                    <column name="id" />
+                </key>
+            </primaryKey>
+        </table>
+    </tables>
+    <views>
+    </views>
+</database>
