@@ -72,7 +72,7 @@ TEST(all_real_columns, tryme) {
     EXPECT_TRUE(col_char.type.contains("CHARACTER"));
 
     const ColumnInfo & col_varchar = coldata.value("varchar");
-    EXPECT_TRUE(col_varchar.type.contains("CHARACTER"));
+    EXPECT_TRUE(col_varchar.type.contains("VARCHAR"));
 
     const ColumnInfo & col_text = coldata.value("text");
     EXPECT_TRUE(col_text.type.contains("VARCHAR"));

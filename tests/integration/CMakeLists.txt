@@ -28,6 +28,9 @@ if (NOT EXISTS "${XML_OUT_DIR}/")
     file(MAKE_DIRECTORY "${XML_OUT_DIR}")
 endif()
 
+file(WRITE "${XML_OUT_DIR}/testincl.h" "#define TEST_XPORT_MACRO")
+include_directories("${XML_OUT_DIR}")
+
 macro(test_xml_source xml_file)
     unset(xml_file_base)
     get_filename_component(xml_file_base "${xml_file}" NAME_WE)
@@ -66,8 +69,12 @@ macro(test_xml_source xml_file)
                 "${CMAKE_SOURCE_DIR}/dbstruct/pileschema.py"
                 "--debug"
                 "cpp"
+                "--namespace" "tstdbstruct"
                 "--schema" "${CMAKE_SOURCE_DIR}/dbstruct/PileSchema.xsd"
+                "--templates" "${CMAKE_SOURCE_DIR}/dbstruct/qt-templates"
                 "--author" "Test Author"
+                "--exportm" "TEST_XPORT_MACRO"
+                "--importh" "testincl.h"
                 "${XML_IN_DIR}/${xml_file}"
                 "${XML_OUT_DIR}/${xml_file}")
 
@@ -76,8 +83,12 @@ macro(test_xml_source xml_file)
                         "${CMAKE_SOURCE_DIR}/dbstruct/pileschema.py"
                         "--debug"
                         "cpp"
+                        "--namespace" "tstdbstruct"
                         "--schema" "${CMAKE_SOURCE_DIR}/dbstruct/PileSchema.xsd"
+                        "--templates" "${CMAKE_SOURCE_DIR}/dbstruct/qt-templates"
                         "--author" "Test Author"
+                        "--exportm" "TEST_XPORT_MACRO"
+                        "--importh" "testincl.h"
                         "${XML_IN_DIR}/${xml_file}"
                         "${XML_OUT_DIR}/${xml_file}"
                     WORKING_DIRECTORY "${XML_OUT_DIR}")
@@ -108,6 +119,17 @@ TEST(${xml_file_base}, tryme) {
     endif()
 
 
+    # generate a module from the sources that were created
+    unset(GENERATED_SOURCES)
+    unset(GENERATED_HEADERS)
+    file(GLOB GENERATED_SOURCES
+         "${XML_OUT_DIR}/${xml_file}/*.cc")
+    file(GLOB GENERATED_HEADERS
+          "${XML_OUT_DIR}/${xml_file}/*.h")
+    add_library("${xml_file_base}_lib" MODULE
+        ${GENERATED_SOURCES} ${GENERATED_HEADERS})
+    target_link_libraries("${xml_file_base}_lib" "dbstruct")
+    qt5_use_modules("${xml_file_base}_lib" Core Sql)
 endmacro()
 
 file(GLOB ALL_SCHEMA_XMLS

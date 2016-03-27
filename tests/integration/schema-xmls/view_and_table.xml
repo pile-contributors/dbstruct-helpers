@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database xmlns="http://pile-contributors.github.io/database/PileSchema.xsd"
+          name="SimpleTable">
+    <tables>
+        <table name="Name">
+            <columns>
+                <column name="id"
+                        label="ID"
+                        readOnly="true">
+                    <int>
+                        <identity />
+                    </int>
+                </column>
+                <column name="type" label="Type" allowNulls="false">
+                    <int />
+                </column>
+                <column name="name" label="Name" allowNulls="true">
+                    <varchar length="512" defaultExpression="NULL" />
+                </column>
+                <column name="observation"
+                        label="Observations"
+                        allowNulls="true">
+                    <text />
+                </column>
+            </columns>
+            <primaryKey>
+                <key>
+                    <column name="id" />
+                </key>
+            </primaryKey>
+        </table>
+
+        <table name="Other">
+            <columns>
+                <column name="id"
+                        label="ID"
+                        readOnly="true">
+                    <int>
+                        <identity />
+                    </int>
+                </column>
+            </columns>
+            <primaryKey>
+                <key>
+                    <column name="id" />
+                </key>
+            </primaryKey>
+        </table>
+    </tables>
+
+    <views>
+        <view name="Workshop">
+            <subset name1="Name" col1="type" constraint="=" value="14" />
+            <writeback table="Name"><column name="type" value="14" /></writeback>
+        </view>
+    </views>
+</database>
